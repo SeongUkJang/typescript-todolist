@@ -1,70 +1,210 @@
-# Getting Started with Create React App
+# 초기세팅
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### TypeScript와 React를 이용한 Todo-List 프로젝트 초기 세팅 정리
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 1. **React 프로젝트 생성**
 
-### `npm start`
+```bash
+npx create-react-app .
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 2. **불필요한 파일 삭제**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![image.png](attachment:393d1cba-87b9-4a22-897e-937e442b3db7:image.png)
 
-### `npm run build`
+![image.png](attachment:f209890b-59e0-4eea-8baa-48309f2dc904:image.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+다음 파일들을 삭제하여 프로젝트를 간소화합니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- `App.test.js`
+- `logo.svg`
+- `reportWebVitals.js`
+- `setupTest.js`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 3. **React 초기 세팅**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**main.js:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
 
-## Learn More
+**App.js:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+import './App.css';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+function App() {
+  return (
+    <div className="App">
+      {/* 내용 작성 예정 */}
+    </div>
+  );
+}
 
-### Code Splitting
+export default App;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 4. **TypeScript 설정**
 
-### Making a Progressive Web App
+TypeScript 관련 의존성을 설치합니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+npm i @types/node @types/react @types/react-dom @types/jest
 
-### Advanced Configuration
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```json
+{
+  "name": "section7",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.tsx",
+  "type": "module",
+  "dependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
 
-### Deployment
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## 5. **`tsconfig.json` 파일 설정**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**초기 설정:**
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "strict": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
+}
+
+```
+
+**추가 설정**: JSX 및 모듈 호환성을 위해 아래 내용을 추가합니다.
+
+---
+
+## 6. **JS 파일을 TS로 변경**
+
+1. 파일 확장자를 `.js`에서 `.tsx`로 변경:
+    - `App.jsx` → `App.tsx`
+    - `index.jsx` → `index.tsx`
+2. TypeScript 타입 지정:
+**index.tsx:**
+
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+```
+
+---
+
+## 7. **오류 해결**
+
+- JSX 사용 오류 시:
+    
+    ![image.png](attachment:326cd49c-462a-47cc-938c-1f554faa6526:image.png)
+    
+    ```json
+    "jsx": "react-jsx"
+    
+    ```
+    
+- `HTMLElement | null` 오류 시:
+    
+    ```tsx
+    const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+    
+    ```
+    
+
+---
+
+프로젝트가 성공적으로 TypeScript 기반으로 초기화되었습니다. 이제 Todo-List 개발을 시작할 준비가 되었습니다! 🎉
+
+[App.tsx](https://www.notion.so/App-tsx-1dd7268828ce804cb12cdc3d2654303b?pvs=21)
+
+[Header.tsx](https://www.notion.so/Header-tsx-1dd7268828ce801ba8bbcb45fe000457?pvs=21)
+
+[TodoEditor.tsx](https://www.notion.so/TodoEditor-tsx-1dd7268828ce802fa62af17f0209e5d0?pvs=21)
+
+[TodoList.tsx](https://www.notion.so/TodoList-tsx-1de7268828ce80f5b948ea3fcf901cde?pvs=21)
+
+[TodoItem.tsx](https://www.notion.so/TodoItem-tsx-1de7268828ce8034be96e3b3ce61a669?pvs=21)
+
+[Build](https://www.notion.so/Build-1de7268828ce80d7b6efd3c4b04f97dc?pvs=21)
