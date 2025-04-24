@@ -1,210 +1,80 @@
-# 초기세팅
+## 🧩 전체 구성 요약
 
-### TypeScript와 React를 이용한 Todo-List 프로젝트 초기 세팅 정리
+이 앱은 **할 일을 추가하고, 완료 표시하고, 삭제하고, 검색할 수 있는** 간단한 투두앱이에요.
 
----
-
-## 1. **React 프로젝트 생성**
-
-```bash
-npx create-react-app .
-
-```
+- ✅ 할 일 추가하기
+- ✅ 할 일 완료 표시 / 해제
+- ✅ 할 일 삭제
+- ✅ 검색 기능으로 필터링
+- ✅ 오늘 날짜 표시
 
 ---
 
-## 2. **불필요한 파일 삭제**
+## 📦 구성요소 한눈에 보기
 
-![image.png](attachment:393d1cba-87b9-4a22-897e-937e442b3db7:image.png)
-
-![image.png](attachment:f209890b-59e0-4eea-8baa-48309f2dc904:image.png)
-
-다음 파일들을 삭제하여 프로젝트를 간소화합니다.
-
-- `App.test.js`
-- `logo.svg`
-- `reportWebVitals.js`
-- `setupTest.js`
+| 컴포넌트 | 역할 |
+| --- | --- |
+| `App.tsx` | **전체 앱의 중심**. 상태 관리(할 일 목록) 및 각 컴포넌트 연결 |
+| `Header.tsx` | 상단에 **오늘 날짜**를 보여주는 부분 |
+| `TodoEditor.tsx` | 사용자가 **할 일을 입력하고 추가**하는 입력창 |
+| `TodoList.tsx` | 할 일들을 **리스트로 보여주는 부분**, 검색 기능 포함 |
+| `TodoItem.tsx` | 할 일 하나하나를 표시하는 컴포넌트. 체크박스/삭제 기능 포함 |
 
 ---
 
-## 3. **React 초기 세팅**
+## 🔁 전체 흐름 설명
 
-**main.js:**
+### 1. 처음 실행되면?
 
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-```
-
-**App.js:**
-
-```jsx
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      {/* 내용 작성 예정 */}
-    </div>
-  );
-}
-
-export default App;
-
-```
+- `App.tsx`에서 미리 정해놓은 `mockData`(샘플 할 일 목록)를 보여줍니다.
 
 ---
 
-## 4. **TypeScript 설정**
+### 2. 할 일을 추가할 때 (TodoEditor)
 
-TypeScript 관련 의존성을 설치합니다.
-
-```bash
-npm i @types/node @types/react @types/react-dom @types/jest
-
-```
-
-```json
-{
-  "name": "section7",
-  "version": "0.1.0",
-  "private": true,
-  "main": "src/index.tsx",
-  "type": "module",
-  "dependencies": {
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^22.14.1",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
-}
-
-```
+- 사용자가 입력창에 텍스트 입력
+- Enter 키 or "추가" 버튼 클릭 → `onCreate()` 실행
+- 새로운 할 일이 추가되고, 화면이 자동으로 업데이트됩니다!
 
 ---
 
-## 5. **`tsconfig.json` 파일 설정**
+### 3. 할 일을 완료했을 때 (TodoItem)
 
-**초기 설정:**
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES5",
-    "module": "CommonJS",
-    "strict": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx"
-  },
-  "include": ["src"]
-}
-
-```
-
-**추가 설정**: JSX 및 모듈 호환성을 위해 아래 내용을 추가합니다.
+- 체크박스를 클릭하면 `onUpdate()`가 실행돼요
+- `isDone` 상태가 true/false로 바뀌면서 완료 표시가 됩니다 (예: 줄 긋기 스타일)
 
 ---
 
-## 6. **JS 파일을 TS로 변경**
+### 4. 할 일을 삭제할 때 (TodoItem)
 
-1. 파일 확장자를 `.js`에서 `.tsx`로 변경:
-    - `App.jsx` → `App.tsx`
-    - `index.jsx` → `index.tsx`
-2. TypeScript 타입 지정:
-**index.tsx:**
-
-```tsx
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-```
+- "삭제" 버튼 클릭 → `onDelete()` 실행
+- 해당 할 일이 목록에서 사라집니다
 
 ---
 
-## 7. **오류 해결**
+### 5. 검색할 때 (TodoList)
 
-- JSX 사용 오류 시:
+- 상단 검색창에 텍스트 입력
+- 입력한 단어가 포함된 할 일만 필터링해서 보여줍니다
+
+---
+
+### 6. 날짜는 어디서 보여줄까? (Header)
+
+- `Header` 컴포넌트에서 오늘 날짜를 보여줍니다
     
-    ![image.png](attachment:326cd49c-462a-47cc-938c-1f554faa6526:image.png)
-    
-    ```json
-    "jsx": "react-jsx"
-    
-    ```
-    
-- `HTMLElement | null` 오류 시:
-    
-    ```tsx
-    const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-    
-    ```
+    예: 📆 오늘은 2025년 4월 24일
     
 
 ---
 
-프로젝트가 성공적으로 TypeScript 기반으로 초기화되었습니다. 이제 Todo-List 개발을 시작할 준비가 되었습니다! 🎉
+## 🧠 이 앱에서 배울 수 있는 React 개념들
 
-[App.tsx](https://www.notion.so/App-tsx-1dd7268828ce804cb12cdc3d2654303b?pvs=21)
-
-[Header.tsx](https://www.notion.so/Header-tsx-1dd7268828ce801ba8bbcb45fe000457?pvs=21)
-
-[TodoEditor.tsx](https://www.notion.so/TodoEditor-tsx-1dd7268828ce802fa62af17f0209e5d0?pvs=21)
-
-[TodoList.tsx](https://www.notion.so/TodoList-tsx-1de7268828ce80f5b948ea3fcf901cde?pvs=21)
-
-[TodoItem.tsx](https://www.notion.so/TodoItem-tsx-1de7268828ce8034be96e3b3ce61a669?pvs=21)
-
-[Build](https://www.notion.so/Build-1de7268828ce80d7b6efd3c4b04f97dc?pvs=21)
+| 개념 | 설명 |
+| --- | --- |
+| `useState` | 상태(state) 관리 (할 일 목록, 입력값 등) |
+| `useRef` | 고유 ID처럼 변하지 않는 값 저장용 |
+| `props` | 컴포넌트끼리 데이터를 주고받을 때 사용 |
+| `map()` | 리스트 렌더링 (여러 개의 할 일을 화면에 보여줄 때) |
+| `filter()` | 검색 기능 구현 |
+| 이벤트 처리 | onClick, onChange, onKeyUp 등 사용자 입력 처리 방법 |
